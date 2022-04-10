@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../Login/Login.css';
+
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import auth from '../../firebase.init';
+
+
 const Login = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
-
+    const navigate = useNavigate();
 
     const handleEmailInput = (event) => {
         setEmail(event.target.value);
@@ -17,21 +21,44 @@ const Login = () => {
     }
 
 
+    const [
+        signInWithEmailAndPassword,
+        user,
+    ] = useSignInWithEmailAndPassword(auth);
 
+
+    const handleFormLogin = (event) => {
+        event.preventDefault();
+
+        signInWithEmailAndPassword(email, password)
+        .then(result => {
+            // const user = result.user
+            console.log('signed in');
+        })
+        .catch(error => {
+            const errorMessage = error.errorMessage;
+            console.log(errorMessage);
+        })
+    }
+
+
+    if(user){
+        navigate('/');
+    }
     return (
         <div className='login-form'>
-            <form>
+            <form onSubmit={handleFormLogin}>
                 <h2>Login</h2>
                 <div className='email-field'>
                     <label className='input-label' htmlFor='email'>Email</label>
                     <div className='mt'>
-                        <input onBlur={handleEmailInput} type="email" name="email" id="email" placeholder='Enter your email' required/>
+                        <input onBlur={handleEmailInput} type="email" name="email" id="email" placeholder='Enter your email' required />
                     </div>
                 </div>
                 <div className='password-field'>
                     <label className='input-label' htmlFor='password'>Password</label>
                     <div className='mt'>
-                        <input onBlur={ handlePasswordInput} type="password" name="password" id="password" placeholder='Your password' required/>
+                        <input onBlur={handlePasswordInput} type="password" name="password" id="password" placeholder='Your password' required />
                     </div>
                 </div>
                 <div className='submit-btn-container'>
