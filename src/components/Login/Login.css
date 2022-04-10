@@ -99,3 +99,7 @@ form input {
     border-radius: 8px;
     border: 2px solid gray;
 }
+
+.error{
+    color: red;
+}
