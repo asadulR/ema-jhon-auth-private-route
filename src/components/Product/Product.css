@@ -27,6 +27,10 @@
     margin-top: 7px;
 }
 .btn-cart{
+    font-weight: 600;
+    color: #5da0c4;
+    padding: 10px 0;
+    transition: .5s;
     width: 100%;
     background: #FFE0B3;
     border: none;
@@ -38,8 +42,9 @@
     justify-content: center;
 }
 .btn-cart .btn-text{
+    margin-bottom: 0;
     margin-right: 5px;
 }
 .btn-cart:hover{
-    background-color: orange;
+    background-color: rgb(55, 54, 61);
 }
